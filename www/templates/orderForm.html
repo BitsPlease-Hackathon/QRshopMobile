@@ -4,27 +4,50 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">First name</span>
-          <input type="text" name="fname" ng-model="user.fname" ng-minlength="3" required>
+          <input type="text" name="firstname" ng-model="user.firstname" ng-minlength="3" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Last name</span>
-          <input type="text" name="lname" ng-model="user.lname" ng-minlength="3" required>
+          <input type="text" name="lastname" ng-model="user.lastname" ng-minlength="3" required>
         </label>
         <label class="item item-input">
           <span class="input-label">e mail</span>
           <input type="email" name="email" ng-model="user.email" ng-minlength="6" required>
         </label>
+        <label class="item item-input">
+          <span class="input-label">Address</span>
+          <input type="text" name="addressStreet" ng-model="user.addressStreet" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Address number</span>
+          <input type="number" name="addressNumber" ng-model="user.addressNumber" >
+        </label>
+        <label class="item item-input">
+          <span class="input-label">City</span>
+          <input type="text" name="city" ng-model="user.city" required>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Postal Code</span>
+          <input type="number" name="postalcode" ng-model="user.postalcode" ng-minlength="5" required>
+        </label>
       </div>
       <div class="padding">
-        <p ng-show="myForm.fname.$error.required">* Name is required</p>
-        <p ng-show="myForm.fname.$error.minlength">* Name must be longer than 3 characters</p>
+        <p ng-show="myForm.firstname.$error.required">* Name is required</p>
+        <p ng-show="myForm.firstname.$error.minlength">* Name must be longer than 3 characters</p>
 
-        <p ng-show="myForm.lname.$error.required">* Last name is required</p>
-        <p ng-show="myForm.lname.$error.minlength">* Last name must be longer than 3 characters</p>
+        <p ng-show="myForm.lastname.$error.required">* Last name is required</p>
+        <p ng-show="myForm.lastname.$error.minlength">* Last name must be longer than 3 characters</p>
 
         <p ng-show="myForm.email.$error.required">* Last name is required</p>
         <p ng-show="myForm.email.$error.minlength">* Last name must be longer than 6 characters</p>
-        <p ng-show="myForm.email.$invalid && !myForm.email.$pristine">* E mail must be a valid email address</p>
+        <p ng-show="myForm.email.$invalid && !myForm.email.$pristine">* Give a valid email address</p>
+
+        <p ng-show="myForm.addressStreet.$error.required">* Address is required</p>
+
+        <p ng-show="myForm.city.$error.required">* City is required</p>
+
+        <p ng-show="myForm.postalcode.$error.required">* Postal code is required</p>
+        <p ng-show="myForm.postalcode.$error.minlength">* Give a valid postal code</p>
       </div>
       <div class="padding">
         <button type="button" class="button button-block button-positive" ng-disabled="myForm.$invalid" ng-click="submit()">Submit</button>

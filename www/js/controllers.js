@@ -3,47 +3,41 @@ angular.module('starter.controllers', [])
   /**
    *
    */
-  .controller('ScannerCtrl', function ($scope, $rootScope, $cordovaBarcodeScanner, $location) {
+  .controller('ScannerCtrl', function ($scope, $rootScope, $cordovaBarcodeScanner, $location, ReadProductService) {
     $scope.temp = function () {
-      $location.path('/order');
+      $location.path('/order'); // todo delete
     };
 
     $scope.scanBarcode = function () {
-      $cordovaBarcodeScanner.scan().then(function (imageData) {
-        //TODO regex validate
-        $rootScope.qrcode = imageData;
-        $location.path('/product');
-      }, function (error) {
-        alert('An error occurred, please scan again');
-        console.log('An error occurred: ' + error);
-      })
-    }
+      ReadProductService.readProduct();
+    };
+
   })
 
   /**
    *
    */
-  .controller('ProductCtrl', function ($scope, rootScope, $cordovaBarcodeScanner, ProductService) {
-    var qrcodeData = $rootScope.qrcode;
+  .controller('ProductCtrl', function ($scope, $cordovaBarcodeScanner, ReadProductService, $location, Core) {
 
-    $scope.scanBarcode = function () {
-      $cordovaBarcodeScanner.scan()
-        .then(function (imageData) {
-          //TODO regex validate
-          qrcodeData = imageData;
-        },
-        function (error) {
-          alert('An error occurred, please scan again');
-          console.log('An error occurred: ' + error);
-        })
+    $scope.product = Core.product;
+
+    $scope.addToCart = function () {
+      Core.cart.push(Core.product.id); //TODO empty array
     };
 
-    ProductService.getProduct(qrcodeData.text)
-      .then(function (responseSuccess) {
-        //TODO show product
-      }, function (responseError) {
-        //TODO throw error
-      })
+    $scope.checkOut = function () {
+      $location.path('/order');
+    };
+
+    $scope.scanBarcode = function () {
+      ReadProductService.readProduct(function () {
+          $scope.product = ProductFactory.product;
+        }
+      );
+
+      console.log($scope.product);
+      //$scope.$apply();
+    };
   })
 
   /**
@@ -53,7 +47,13 @@ angular.module('starter.controllers', [])
     $scope.user = {};
 
     $scope.submit = function () {
-      OrderService.createOrder($scope.user).then();
+      OrderService.createOrder($scope.user)
+        .then(function (response) {
+          alert('order created');
+          console.log(response);
+        }, function (error) {
+          alert('error - ' + JSON.stringify(error))
+        });
       $location.path('');
     }
   });
