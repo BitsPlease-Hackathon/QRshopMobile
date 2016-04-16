@@ -1,4 +1,14 @@
 angular.module('starter.controllers', [])
+  
+  .controller('ScannerCtrl', function ($scope, $rootScope, $cordovaBarcodeScanner) {
+    $scope.scanBarcode = function () {
+      $cordovaBarcodeScanner.scan().then(function (imageData) {
+        alert('Success - ' + imageData.text);
+      }, function (error) {
+        console.log('An error occurred: ' + error);
+      })
+    }
+  })
 
   .controller('DashCtrl', function ($scope) {
   })
