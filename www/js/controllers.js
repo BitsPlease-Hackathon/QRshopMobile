@@ -3,7 +3,7 @@ angular.module('starter.controllers', [])
   /**
    *
    */
-  .controller('ScannerCtrl', function ($scope, $rootScope, $cordovaBarcodeScanner, $location, ReadProductService) {
+  .controller('HomeCtrl', function ($scope, $rootScope, $cordovaBarcodeScanner, $location, ReadProductService) {
     $scope.temp = function () {
       $location.path('/order'); // todo delete
     };
@@ -11,18 +11,16 @@ angular.module('starter.controllers', [])
     $scope.scanBarcode = function () {
       ReadProductService.readProduct();
     };
-
   })
 
   /**
    *
    */
   .controller('ProductCtrl', function ($scope, $cordovaBarcodeScanner, ReadProductService, $location, Core) {
-
     $scope.product = Core.product;
 
     $scope.addToCart = function () {
-      Core.cart.push(Core.product.id); //TODO empty array
+      Core.cart.push(Core.product); //TODO empty array
     };
 
     $scope.checkOut = function () {
@@ -31,12 +29,10 @@ angular.module('starter.controllers', [])
 
     $scope.scanBarcode = function () {
       ReadProductService.readProduct(function () {
-          $scope.product = ProductFactory.product;
+          $scope.product = Core.product;
         }
       );
-
       console.log($scope.product);
-      //$scope.$apply();
     };
   })
 
@@ -51,9 +47,25 @@ angular.module('starter.controllers', [])
         .then(function (response) {
           alert('order created');
           console.log(response);
+          $location.path('');
         }, function (error) {
-          alert('error - ' + JSON.stringify(error))
+          alert('error - ' + JSON.stringify(error));
+          console.log(error);
         });
-      $location.path('');
+    }
+  })
+
+  /**
+   *
+   */
+  .controller('CartCtrl', function ($scope, Core) {
+    $scope.products = Core.cart;
+
+    $scope.checkOut = function () {
+      $location.path('/order');
+    };
+
+    $scope.removeProduct = function (index) {
+      Core.cart.splice(index, 1);
     }
   });

@@ -5,9 +5,11 @@ angular.module('starter.services', [])
       base_url: 'http://localhost:9000',
       //www.team4hackathon.eu
       product: {},
-      cart: {}
+      cart: []
     }
   })
+  
+  
 
   .service('ReadProductService', function ($cordovaBarcodeScanner, $location, $http, Core) {
 
@@ -48,7 +50,9 @@ angular.module('starter.services', [])
           headers: {
             'Content-Type': 'application/json'
           },
-          data: [{
+          data: user
+            
+            [{
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,

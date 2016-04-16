@@ -1,16 +1,15 @@
-<ion-view view-title="{{product.name}}">
-  <ion-nav-bar class="bar-positive"></ion-nav-bar>
+<ion-view>
+  <div class="bar bar-positive">{{product.name}}</div>
   <ion-content class="padding">
     <div class="list">
-      <div class="item item-avatar-left"></div>
+      <div class="item item-icon-left"><img src="img/empty.png"/></div>
       <div class="item item-text-wrap">{{product.sortDescription}}</div>
-      <div class="item">{{product.price}}e</div>
+      <div class="item">{{product.price}} €</div>
       <div class="button-bar">
         <button class="button button-calm" ng-click="addToCart()">Add to cart</button>
         <button class="button button-royal" ng-click="checkOut()">Check out</button>
       </div>
       <div class="button button-full button-positive" ng-click="scanBarcode()">Scan another product</div>
-
     </div>
   </ion-content>
 </ion-view>

@@ -34,7 +34,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       .state('home', {
         url: '/home',
         templateUrl: 'templates/home.html',
-        controller: 'ScannerCtrl'
+        controller: 'HomeCtrl'
       })
 
       .state('product', {
@@ -47,6 +47,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         url: '/order',
         templateUrl: 'templates/orderForm.html',
         controller: 'OrderCtrl'
+      })
+    
+      .state('cart', {
+        url: '/cart',
+        templateUrl: 'templates/cart.html',
+        controller: 'CartCtrl'
       });
 
     // if none of the above states are matched, use this as the fallback
