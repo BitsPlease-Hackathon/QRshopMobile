@@ -36,11 +36,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/home.html',
         controller: 'ScannerCtrl'
       })
-    
+
       .state('product', {
         url: '/product',
         templateUrl: 'templates/product.html',
         controller: 'ProductCtrl'
+      })
+
+      .state('order', {
+        url: '/order',
+        templateUrl: 'templates/orderForm.html',
+        controller: 'OrderCtrl'
       });
 
     // if none of the above states are matched, use this as the fallback

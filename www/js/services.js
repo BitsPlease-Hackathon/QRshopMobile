@@ -1,5 +1,11 @@
 angular.module('starter.services', [])
 
+.factory('Core', function () {
+  return {
+    base_url : 'http://www.team4hackathon.eu:9000'
+  }
+})
+
 .service('ScannerService', function ($cordovaBarcodeScanner) {
   return {
     scanBarcode: function() {
@@ -14,28 +20,32 @@ angular.module('starter.services', [])
   }
 })
 
-.service('GetProductService', function ($http) {
+.service('ProductService', function ($http, Core) {
   return {
     getProduct: function(uuid) {
-      $http({
+      return $http({
         method: 'GET',
-        url: BASE_URL + '/products/' + uuid
+        url: Core.base_url + '/products/' + uuid
       })
     }
   }
 })
 
-.service('PostOrderService', function ($http, data) {
+.service('OrderService', function ($http, Core) {
   return {
-    createOrder: function () {
-      $http({
-        method: 'GET',
-        url: BASE_URL,
+    createOrder: function (user) {
+      return $http({
+        method: 'POST',
+        url: Core.base_url,
         headers: {
           'Content-Type' : 'application/json'
         },
-        data: { data: data } // TODO
-      })
+        data: {
+          fname: user.fname,
+          lname: user.lname,
+          email: user.email
+        } // TODO
+      });
     }
   }
 });
