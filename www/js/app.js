@@ -23,7 +23,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  .config(function ($stateProvider, $httpProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         templateUrl: 'templates/orderForm.html',
         controller: 'OrderCtrl'
       })
-    
+
       .state('cart', {
         url: '/cart',
         templateUrl: 'templates/cart.html',

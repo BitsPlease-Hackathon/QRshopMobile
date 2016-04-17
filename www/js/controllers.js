@@ -16,14 +16,30 @@ angular.module('starter.controllers', [])
   /**
    *
    */
-  .controller('ProductCtrl', function ($scope, $cordovaBarcodeScanner, ReadProductService, $location, Core) {
+  .controller('ProductCtrl', function ($scope, $location, $cordovaBarcodeScanner, ReadProductService, Core, $filter) {
     $scope.product = Core.product;
 
+    $scope.goToCart = function () {
+      $location.path('/cart');
+    };
+
     $scope.addToCart = function () {
-      Core.cart.push(Core.product); //TODO empty array
+      var tempArray = $filter('filter')(Core.cart, Core.product);
+
+      if (tempArray.length == 0) {
+        Core.cart.push(Core.product);
+        Core.quantity[Core.product.id] = 1;
+      }
+      else {
+        Core.quantity[Core.product.id]++;
+      }
     };
 
     $scope.checkOut = function () {
+      if(Core.cart.length == 0) {
+        Core.cart.push(Core.product);
+        Core.quantity[Core.product.id] = 1;
+      }
       $location.path('/order');
     };
 
@@ -39,19 +55,56 @@ angular.module('starter.controllers', [])
   /**
    *
    */
-  .controller('OrderCtrl', function ($scope, OrderService, $location) {
-    $scope.user = {};
+  .controller('OrderCtrl', function ($scope, OrderService, $location, Core, $http) {
+
+    $scope.name = {};
+    $scope.address = {};
+
+    var orderDetails = [];
+
+    angular.forEach(Core.cart, function (value, key) {
+      var tempJson = {quantity : Core.quantity[value.id], product : {id : value.id}};
+      orderDetails.push(tempJson);
+    });
 
     $scope.submit = function () {
-      OrderService.createOrder($scope.user)
-        .then(function (response) {
-          alert('order created');
+
+      var customer = {
+        name : $scope.name,
+        address : $scope.address
+      };
+
+      OrderService.createCustomer(customer).then(
+        function successCustomer(response) {
           console.log(response);
-          $location.path('');
-        }, function (error) {
-          alert('error - ' + JSON.stringify(error));
+
+          var order = {
+            date : new Date,
+            status : 'pending',
+            orderDetails : orderDetails,
+            customer : {
+              id: response.data.id
+            }
+          };
+
+          OrderService.createOrder(order).then(
+            function successOrder(response) {
+              console.log(response);
+              alert('order submitted'); // TODO pop up
+              Core = {};
+              $location.path('/home');
+            },
+            function failOrder(error) {
+              console.log(error);
+              alert('error - ' + JSON.stringify(error));
+            }
+          );
+        },
+        function failCustomer(error) {
           console.log(error);
-        });
+          alert('error - ' + JSON.stringify(error));
+        }
+      );
     }
   })
 
@@ -60,6 +113,9 @@ angular.module('starter.controllers', [])
    */
   .controller('CartCtrl', function ($scope, Core) {
     $scope.products = Core.cart;
+    $scope.quantity = function (id) {
+      return Core.quantity[id];
+    };
 
     $scope.checkOut = function () {
       $location.path('/order');

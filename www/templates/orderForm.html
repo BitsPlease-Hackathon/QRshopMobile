@@ -1,34 +1,34 @@
-<ion-view view-title="CHeck out">
+<ion-view view-title="Check out">
   <ion-content class="padding">
     <form name="myForm" novalidate>
       <div class="list">
         <label class="item item-input">
           <span class="input-label">First name</span>
-          <input type="text" name="firstname" ng-model="user.firstname" ng-minlength="3" required>
+          <input type="text" name="firstname" ng-model="name.firstname" ng-minlength="3" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Last name</span>
-          <input type="text" name="lastname" ng-model="user.lastname" ng-minlength="3" required>
+          <input type="text" name="lastname" ng-model="name.lastname" ng-minlength="3" required>
         </label>
         <label class="item item-input">
           <span class="input-label">e mail</span>
-          <input type="email" name="email" ng-model="user.email" ng-minlength="6" required>
+          <input type="email" name="email" ng-model="email" ng-minlength="6" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Address</span>
-          <input type="text" name="addressStreet" ng-model="user.addressStreet" required>
+          <input type="text" name="addressStreet" ng-model="address.addressStreet" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Address number</span>
-          <input type="number" name="addressNumber" ng-model="user.addressNumber" >
+          <input type="number" name="addressNumber" ng-model="address.addressNumber" >
         </label>
         <label class="item item-input">
           <span class="input-label">City</span>
-          <input type="text" name="city" ng-model="user.city" required>
+          <input type="text" name="city" ng-model="address.city" required>
         </label>
         <label class="item item-input">
           <span class="input-label">Postal Code</span>
-          <input type="number" name="postalcode" ng-model="user.postalcode" ng-minlength="5" required>
+          <input type="number" name="postalcode" ng-model="address.postalcode" ng-minlength="5" required>
         </label>
       </div>
       <div class="padding">

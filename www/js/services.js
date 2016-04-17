@@ -5,11 +5,10 @@ angular.module('starter.services', [])
       base_url: 'http://localhost:9000',
       //www.team4hackathon.eu
       product: {},
-      cart: []
+      cart: [],
+      quantity: []
     }
   })
-  
-  
 
   .service('ReadProductService', function ($cordovaBarcodeScanner, $location, $http, Core) {
 
@@ -43,35 +42,22 @@ angular.module('starter.services', [])
 
   .service('OrderService', function ($http, Core) {
     return {
-      createOrder: function (user) {
+      createCustomer: function (customer) {
         return $http({
           method: 'POST',
-          url: Core.base_url,
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: user
-            
-            [{
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            addressStreet: user.addressStreet,
-            addressNumber: user.addressNumber, //todo empty string
-            city: user.city,
-            postalcode: user.postalcode
-          }]
-
-            [{
-            date: new Date(),
-            status: 'pending'
-          }]
-
-            [{
-            quantity: quantity //TODO quantity
-          }]
-
+          url: Core.base_url + '/customers',
+          dataType: 'json',
+          data: customer
         });
+      },
+
+      createOrder: function (order) {
+        return $http({
+          method: 'POST',
+          url: Core.base_url + '/orders',
+          dataType: 'json',
+          data: order
+        })
       }
     }
   });
