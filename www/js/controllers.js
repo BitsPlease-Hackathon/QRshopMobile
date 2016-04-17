@@ -94,7 +94,7 @@ angular.module('starter.controllers', [])
           OrderService.createOrder(order).then(
             function successOrder(response) {
               console.log(response);
-              alert('order submitted'); // TODO pop up
+              alert('Thank you for your purchase'); // TODO pop up
               Core = {};
               $location.path('/home');
             },
