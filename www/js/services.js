@@ -2,8 +2,7 @@ angular.module('starter.services', [])
 
   .factory('Core', function () {
     return {
-      base_url: 'http://localhost:9000',
-      //www.team4hackathon.eu
+      base_url: 'http://139.59.140.191:9000',
       product: {},
       cart: [],
       quantity: []
@@ -16,11 +15,21 @@ angular.module('starter.services', [])
       readProduct: function (callback) {
         $cordovaBarcodeScanner.scan().then(function (imageData) {
 
+          if (imageData == "" || imageData == null) {
+            $location.path('/');
+            return;
+          }
+
           //Call service to get product
           $http({
             method: 'GET',
+            headers : {
+              'Content-Type': 'application/json',
+              'Accept' : 'application/json'
+            },
             url: Core.base_url + '/products/' + imageData.text
           }).then(function (responseSuccess) {
+
             Core.product = responseSuccess.data;
             if (callback) {
               callback();
@@ -32,7 +41,6 @@ angular.module('starter.services', [])
           });
 
         }, function (error) {
-          alert('An error occurred, please scan again');
           console.log('An error occurred: ' + error);
         })
       }

@@ -1,16 +1,22 @@
 <ion-view>
-  <div class="bar bar-positive">{{product.name}}</div>
+  <!--<div class="bar bar-positive">{{product.name}}</div><ion-nav-buttons></ion-nav-buttons>-->
+  <ion-nav-buttons side="primary">
+    <button class="button ion-android-cart" ng-click="goToCart()">CART
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <div class="list">
-      <div class="item item-icon-left"><img src="img/empty.png"/></div>
-      <div class="item item-text-wrap">{{product.sortDescription}}</div>
-      <div class="item">{{product.price}} €</div>
-      <div class="button-bar">
+      <div class="item positive"><h2>{{product.name}}</h2></div>
+      <div class="item item-icon-left">
+        <img style="margin: auto" data-ng-src="data:image/png;base64,{{product.imageBase64}}" data-err-src="images/png/avatar.png" height="150" width="150"/>
+      </div>
+      <div class="item item-text-wrap">{{product.description}}</div>
+      <div class="item">{{product.modprice}} € <span style="float: right">{{counter}}</span></div>
+      <div class="item button-bar">
         <button class="button button-calm" ng-click="addToCart()">Add to cart</button>
         <button class="button button-royal" ng-click="checkOut()">Check out</button>
       </div>
       <div class="button button-full button-positive" ng-click="scanBarcode()">Scan another product</div>
-      <div class="button button-full button-positive" ng-click="goToCart()">CART temp</div>
     </div>
   </ion-content>
 </ion-view>

@@ -18,6 +18,7 @@ angular.module('starter.controllers', [])
    */
   .controller('ProductCtrl', function ($scope, $location, $cordovaBarcodeScanner, ReadProductService, Core, $filter) {
     $scope.product = Core.product;
+    $scope.product.modprice = Core.product.price * 1;
 
     $scope.goToCart = function () {
       $location.path('/cart');
@@ -33,6 +34,9 @@ angular.module('starter.controllers', [])
       else {
         Core.quantity[Core.product.id]++;
       }
+
+      $scope.counter = 'x' +  Core.quantity[Core.product.id];
+      $scope.product.modprice = Core.product.price * Core.quantity[Core.product.id];
     };
 
     $scope.checkOut = function () {
